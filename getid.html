@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>getElementById</title>
+</head>
+<body>
+    <div id="div1">我是一个div</div>
+    <script>
+        // 封装函数 $()
+        // var getId = function (id) {
+        //     // 返回值 DOM 找到元素
+        //     return document.getElementById(id)
+        // }
+        document.getElementById = (function(func) {
+            // 闭包 即闭合空间 函数内部还有函数
+            // 运行的时候保持对创建时的引用。
+            return function() {
+                // 正确性 this-> window
+                console.log(this);
+                return func.apply(document, arguments);
+            }
+        })(document.getElementById);   
+        var getId = document.getElementById;
+        // 函数 fn 保持了引用关系
+        const oDiv = getId('div1');
+        console.log(oDiv);
+    </script>
+</body>
+</html>
